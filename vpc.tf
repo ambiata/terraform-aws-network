@@ -5,12 +5,8 @@ resource "aws_vpc" "default" {
   tags = merge(
     var.tags,
     {
-      "Name"    = format(local.names[var.name_pattern].vpc, var.name, local.name_suffix)
+      "Name"    = "${var.name}-VPC"
       "EnvName" = var.name
-    },
-    {
-      for cluster_name in concat(var.kubernetes_clusters, var.kubernetes_clusters_secure) :
-      format("kubernetes.io/cluster/%s", cluster_name) => var.kubernetes_clusters_type
     },
   )
 }
@@ -21,8 +17,8 @@ resource "aws_internet_gateway" "default" {
   tags = merge(
     var.tags,
     {
-      "Name"    = format(local.names[var.name_pattern].ig, var.name, local.name_suffix)
+      "Name"    = "${var.name}-IG"
       "EnvName" = var.name
-    }
+    },
   )
 }
