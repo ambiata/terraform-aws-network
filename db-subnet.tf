@@ -1,11 +1,11 @@
 resource "aws_db_subnet_group" "secure" {
-  name       = lower(format(local.names[var.name_pattern].db_subnet, var.name, local.name_suffix))
+  name       = "${lower(var.name)}-dbsubnet"
   subnet_ids = aws_subnet.secure.*.id
 
   tags = merge(
     var.tags,
     {
-      "Name"    = format(local.names[var.name_pattern].db_subnet, var.name, local.name_suffix)
+      "Name"    = "${var.name}-DBSubnet"
       "Scheme"  = "secure"
       "EnvName" = var.name
     },
